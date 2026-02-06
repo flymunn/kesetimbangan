@@ -1355,11 +1355,16 @@
                     // F = m × a → a = F/m
                     const resultantForce = Wparallel - fmax;
                     const acceleration = resultantForce / mass;
-                    vehiclePosition += acceleration * 0.5;
+                    // Skala untuk visualisasi: percepatan riil terlalu kecil untuk terlihat di layar
+                    // Menggunakan percepatan relatif terhadap gravitasi untuk animasi natural
+                    const visualAcceleration = (acceleration / g) * 50; // Normalisasi ke gravitasi
+                    vehiclePosition += visualAcceleration;
                     if (vehiclePosition > roadLength - 300) vehiclePosition = roadLength - 300;
                 } else if (angle < 0.01) {
+                    // Jalan datar - kendaraan bergerak konstan
                     vehiclePosition = (vehiclePosition + 1.5) % (roadLength - 200);
                 } else {
+                    // Sistem hampir seimbang - osilasi kecil
                     vehiclePosition = 250 + Math.sin(time * 2) * 2;
                 }
             }
