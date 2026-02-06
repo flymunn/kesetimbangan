@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kesetimbangan dalam Fisika - Pembelajaran Interaktif</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a365d;
+            --secondary: #2c5282;
+            --accent: #ed8936;
+            --light: #f7fafc;
+            --dark: #1a202c;
+            --success: #38a169;
+            --danger: #e53e3e;
+            --warning: #dd6b20;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            color: var(--dark);
+            line-height: 1.7;
+            background: var(--light);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100px); }
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .section h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .theory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .theory-card {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--accent);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theory-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: var(--accent);
+            opacity: 0.05;
+            border-radius: 50%;
+            transform: translate(50%, -50%);
+        }
+
+        .theory-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .theory-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .theory-card p {
+            color: #4a5568;
+            margin-bottom: 0.8rem;
+        }
+
+        .theory-card ul {
+            margin-left: 1.5rem;
+            color: #4a5568;
+        }
+
+        .theory-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        .formula {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 1.2rem;
+            border: 2px solid var(--accent);
+            color: var(--primary);
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(237, 137, 54, 0.1);
+        }
+
+        .example-box {
+            background: #fff5e6;
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            color: var(--warning);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .simulation-container {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .mode-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .mode-btn {
+            padding: 1.3rem;
+            border: 3px solid transparent;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            color: var(--primary);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+
+        .mode-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .canvas-container {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        canvas {
+            display: block;
+            margin: 0 auto;
+            border: 3px solid #e2e8f0;
+            border-radius: 10px;
+            background: #fafafa;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .control-group {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #e2e8f0;
+            outline: none;
+            margin: 0.8rem 0;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(237, 137, 54, 0.4);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            border: none;
+        }
+
+        .value-display {
+            text-align: center;
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin-top: 0.5rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        button {
+            flex: 1;
+            min-width: 150px;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 15px rgba(237, 137, 54, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--warning);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(237, 137, 54, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c53030;
+            transform: translateY(-2px);
+        }
+
+        .info-panel {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .info-panel h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .info-item {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 1.3rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .info-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .info-item .label {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .info-item .value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            border-radius: 25px;
+            font-weight: 700;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .status-balanced {
+            background: linear-gradient(135deg, #38a169 0%, #48bb78 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(56, 161, 105, 0.3);
+        }
+
+        .status-unbalanced {
+            background: linear-gradient(135deg, #e53e3e 0%, #fc8181 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+        }
+
+        .explanation-panel {
+            background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            border-left: 5px solid var(--primary);
+        }
+
+        .explanation-panel h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .explanation-panel p {
+            color: #4a5568;
+            line-height: 1.8;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-container label {
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .theory-grid,
+            .controls,
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            canvas {
+                width: 100%;
+                height: auto;
+            }
+
+            .section {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">⚖️ Fisika Kesetimbangan</div>
+            <ul>
+                <li><a href="#beranda">Beranda</a></li>
+                <li><a href="#teori">Materi Teori</a></li>
+                <li><a href="#simulasi">Simulasi</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="beranda">
+        <h1>Kesetimbangan dalam Fisika</h1>
+        <p>Memahami konsep gaya, torsi, dan kesetimbangan melalui simulasi interaktif</p>
+    </section>
+
+    <div class="container">
+        <section class="section" id="teori">
+            <h2>📚 Materi Teori Kesetimbangan</h2>
+            
+            <div class="theory-grid">
+                <div class="theory-card">
+                    <h3>Pengertian Kesetimbangan</h3>
+                    <p>Kesetimbangan adalah keadaan suatu benda dimana resultan gaya dan resultan momen gaya yang bekerja pada benda tersebut sama dengan nol.</p>
+                    <p><strong>Dalam kehidupan sehari-hari:</strong></p>
+                    <ul>
+                        <li>Buku yang diam di atas meja</li>
+                        <li>Lampu gantung yang terpasang di langit-langit</li>
+                        <li>Jembatan yang menahan beban kendaraan</li>
+                        <li>Mobil yang parkir di tanjakan</li>
+                    </ul>
+                </div>
+
+                <div class="theory-card">
+                    <h3>Kesetimbangan Statis</h3>
+                    <p>Kesetimbangan statis terjadi ketika benda dalam keadaan diam (kecepatan = 0). Syarat kesetimbangan statis:</p>
+                    <div class="formula">ΣF = 0</div>
+                    <p style="text-align: center; margin-top: -0.5rem; margin-bottom: 1rem; color: #718096;">Resultan gaya sama dengan nol</p>
+                    <div class="formula">Στ = 0</div>
+                    <p style="text-align: center; margin-top: -0.5rem; color: #718096;">Resultan momen gaya sama dengan nol</p>
+                    
+                    <div class="example-box">
+                        <h4>💡 Contoh Kesetimbangan Statis:</h4>
+                        <p><strong>Mobil parkir di tanjakan:</strong> Gaya berat mobil diimbangi oleh gaya normal dan gaya gesek dari rem tangan. Resultan gaya = 0, sehingga mobil tidak bergerak turun.</p>
+                    </div>
+                </div>
+
+                <div class="theory-card">
+                    <h3>Kesetimbangan Dinamis</h3>
+                    <p>Kesetimbangan dinamis terjadi ketika benda bergerak dengan kecepatan konstan (percepatan = 0).</p>
+                    <div class="formula">a = 0</div>
+                    <p style="text-align: center; margin-top: -0.5rem; margin-bottom: 1rem; color: #718096;">Percepatan sama dengan nol</p>
+                    <div class="formula">ΣF = 0</div>
+                    <p style="text-align: center; margin-top: -0.5rem; color: #718096;">Gaya dorong = Gaya hambat</p>
+                    
+                    <div class="example-box">
+                        <h4>💡 Contoh Kesetimbangan Dinamis:</h4>
+                        <p><strong>Mobil di jalan tol:</strong> Ketika mobil bergerak dengan kecepatan tetap 80 km/jam, gaya mesin sama dengan gaya hambat (gesekan + hambatan udara). Resultan gaya = 0.</p>
+                    </div>
+                </div>
+
+                <div class="theory-card">
+                    <h3>Momen Gaya (Torsi)</h3>
+                    <p>Momen gaya atau torsi adalah ukuran kemampuan gaya untuk memutar benda terhadap suatu poros (titik tumpu).</p>
+                    <div class="formula">τ = F × r × sin(θ)</div>
+                    <p style="margin-top: 1rem;"><strong>Dimana:</strong></p>
+                    <ul>
+                        <li><strong>τ (tau)</strong> = torsi / momen gaya (Nm)</li>
+                        <li><strong>F</strong> = besar gaya (N)</li>
+                        <li><strong>r</strong> = jarak dari poros ke titik tangkap gaya (m)</li>
+                        <li><strong>θ (theta)</strong> = sudut antara arah gaya dan lengan momen</li>
+                    </ul>
+                    
+                    <div class="example-box">
+                        <h4>💡 Contoh Torsi dalam Kehidupan:</h4>
+                        <p><strong>Membuka pintu:</strong> Lebih mudah membuka pintu dengan mendorong di bagian pegangan (jauh dari engsel) daripada mendorong dekat engsel, karena lengan momen (r) lebih besar sehingga torsi lebih besar.</p>
+                    </div>
+                </div>
+
+                <div class="theory-card">
+                    <h3>Titik Berat (Pusat Massa)</h3>
+                    <p>Titik berat adalah titik dimana seluruh berat benda dapat dianggap terkonsentrasi. Untuk benda homogen, titik berat berada di pusat geometris benda.</p>
+                    <div class="formula">x<sub>cm</sub> = (Σm<sub>i</sub> × x<sub>i</sub>) / Σm<sub>i</sub></div>
+                    <p style="margin-top: 1rem;"><strong>Prinsip kesetimbangan:</strong></p>
+                    <p>Benda akan seimbang jika garis vertikal yang melalui titik berat jatuh di dalam bidang tumpu.</p>
+                    
+                    <div class="example-box">
+                        <h4>💡 Contoh Penerapan Titik Berat:</h4>
+                        <p><strong>Truk pengangkut barang:</strong> Jika barang ditumpuk terlalu tinggi, titik berat akan naik. Saat truk berbelok, garis vertikal dari titik berat bisa keluar dari bidang tumpu sehingga truk terguling.</p>
+                    </div>
+                </div>
+
+                <div class="theory-card">
+                    <h3>Jenis-Jenis Kesetimbangan</h3>
+                    <p><strong>1. Kesetimbangan Stabil:</strong> Ketika diberi gangguan kecil, benda akan kembali ke posisi semula. Titik berat berada di posisi paling rendah.</p>
+                    <p><strong>Contoh:</strong> Bandul yang digantung, gelas di atas meja.</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>2. Kesetimbangan Labil:</strong> Ketika diberi gangguan kecil, benda akan bergerak menjauhi posisi semula. Titik berat berada di posisi paling tinggi.</p>
+                    <p><strong>Contoh:</strong> Pensil yang berdiri tegak di ujungnya.</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>3. Kesetimbangan Netral:</strong> Ketika diberi gangguan, benda akan tetap seimbang di posisi baru. Titik berat tetap pada ketinggian yang sama.</p>
+                    <p><strong>Contoh:</strong> Bola yang menggelinding di lantai datar.</p>
+                </div>
+
+                <div class="theory-card">
+                    <h3>Gaya-Gaya pada Benda</h3>
+                    <p><strong>1. Gaya Berat (W):</strong></p>
+                    <div class="formula">W = m × g</div>
+                    <p>Arahnya selalu menuju pusat bumi (vertikal ke bawah). g = 9,8 m/s² atau ~10 m/s²</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>2. Gaya Normal (N):</strong></p>
+                    <p>Gaya yang diberikan bidang pada benda, arahnya tegak lurus bidang sentuh.</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>3. Gaya Gesek (f):</strong></p>
+                    <div class="formula">f = μ × N</div>
+                    <p>μ (mu) adalah koefisien gesek. Arah gaya gesek melawan arah gerak atau kecenderungan gerak.</p>
+                </div>
+
+                <div class="theory-card">
+                    <h3>Syarat Kesetimbangan Lengkap</h3>
+                    <p>Agar suatu benda berada dalam kesetimbangan sempurna, harus memenuhi dua syarat sekaligus:</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>Syarat 1 - Translasi:</strong></p>
+                    <div class="formula">ΣF<sub>x</sub> = 0 dan ΣF<sub>y</sub> = 0</div>
+                    <p>Jumlah semua komponen gaya dalam arah horizontal dan vertikal harus nol.</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>Syarat 2 - Rotasi:</strong></p>
+                    <div class="formula">Στ = 0</div>
+                    <p>Jumlah torsi searah jarum jam harus sama dengan jumlah torsi berlawanan arah jarum jam.</p>
+                    
+                    <div class="example-box">
+                        <h4>💡 Contoh Penerapan:</h4>
+                        <p><strong>Tuas untuk mengangkat beban:</strong> Untuk mengangkat beban 100 kg dengan gaya 50 N, kita perlu lengan kuasa yang 20 kali lebih panjang dari lengan beban, sesuai prinsip: F₁ × r₁ = F₂ × r₂</p>
+                    </div>
+                </div>
+
+                <div class="theory-card">
+                    <h3>Aplikasi dalam Transportasi</h3>
+                    <p><strong>Stabilitas Kendaraan:</strong></p>
+                    <p>Kendaraan dirancang dengan titik berat serendah mungkin untuk meningkatkan stabilitas. SUV dan truk memiliki risiko terguling lebih besar karena titik berat lebih tinggi.</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>Distribusi Beban:</strong></p>
+                    <p>Posisi penumpang dan barang mempengaruhi kesetimbangan kendaraan. Beban harus didistribusikan merata untuk menjaga kesetimbangan.</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>Rem dan Tanjakan:</strong></p>
+                    <p>Pada tanjakan, komponen gaya berat sejajar bidang (W sin θ) harus diimbangi oleh gaya gesek dari rem agar kendaraan tidak meluncur.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="simulasi">
+            <h2>🔬 Simulasi Interaktif Kesetimbangan</h2>
+            
+            <div class="simulation-container">
+                <h3 style="color: var(--primary); margin-bottom: 1.5rem; font-size: 1.4rem;">Pilih Mode Simulasi:</h3>
+                <div class="mode-selector">
+                    <button class="mode-btn active" onclick="setMode('lever')">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚖️</div>
+                        Tuas Sederhana
+                    </button>
+                    <button class="mode-btn" onclick="setMode('vehicle')">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🚗</div>
+                        Kendaraan di Jalan
+                    </button>
+                    <button class="mode-btn" onclick="setMode('incline')">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📐</div>
+                        Bidang Miring
+                    </button>
+                </div>
+
+                <div class="canvas-container">
+                    <canvas id="simulationCanvas" width="900" height="550"></canvas>
+                </div>
+
+                <div class="checkbox-container" onclick="toggleExplanation()">
+                    <input type="checkbox" id="autoExplain" checked>
+                    <label for="autoExplain">🎓 Mode Pembelajaran (Penjelasan Otomatis)</label>
+                </div>
+
+                <div id="leverControls" class="controls">
+                    <div class="control-group">
+                        <label>Massa Beban Kiri (kg)</label>
+                        <input type="range" id="massLeft" min="5" max="100" value="30" step="5">
+                        <div class="value-display"><span id="massLeftValue">30</span> kg</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Massa Beban Kanan (kg)</label>
+                        <input type="range" id="massRight" min="5" max="100" value="30" step="5">
+                        <div class="value-display"><span id="massRightValue">30</span> kg</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Jarak Kiri dari Tumpuan (m)</label>
+                        <input type="range" id="distanceLeft" min="0.5" max="4" value="2" step="0.1">
+                        <div class="value-display"><span id="distanceLeftValue">2.0</span> m</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Jarak Kanan dari Tumpuan (m)</label>
+                        <input type="range" id="distanceRight" min="0.5" max="4" value="2" step="0.1">
+                        <div class="value-display"><span id="distanceRightValue">2.0</span> m</div>
+                    </div>
+                </div>
+
+                <div id="vehicleControls" class="controls" style="display: none;">
+                    <div class="control-group">
+                        <label>Massa Kendaraan (kg)</label>
+                        <input type="range" id="vehicleMass" min="800" max="3000" value="1500" step="100">
+                        <div class="value-display"><span id="vehicleMassValue">1500</span> kg</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Sudut Kemiringan Jalan (°)</label>
+                        <input type="range" id="roadAngle" min="0" max="35" value="0" step="1">
+                        <div class="value-display"><span id="roadAngleValue">0</span>°</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Posisi Beban dalam Kendaraan</label>
+                        <select id="loadPosition" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 2px solid #e2e8f0; font-size: 1rem; margin-top: 0.5rem;">
+                            <option value="front">Depan</option>
+                            <option value="center" selected>Tengah</option>
+                            <option value="rear">Belakang</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Koefisien Gesek (μ)</label>
+                        <input type="range" id="friction" min="0.1" max="1.0" value="0.7" step="0.05">
+                        <div class="value-display"><span id="frictionValue">0.70</span></div>
+                    </div>
+                </div>
+
+                <div id="inclineControls" class="controls" style="display: none;">
+                    <div class="control-group">
+                        <label>Massa Benda (kg)</label>
+                        <input type="range" id="objectMass" min="5" max="100" value="20" step="5">
+                        <div class="value-display"><span id="objectMassValue">20</span> kg</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Sudut Kemiringan Bidang (°)</label>
+                        <input type="range" id="inclineAngle" min="5" max="60" value="30" step="1">
+                        <div class="value-display"><span id="inclineAngleValue">30</span>°</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Koefisien Gesek Bidang (μ)</label>
+                        <input type="range" id="inclineFriction" min="0" max="1.0" value="0.3" step="0.05">
+                        <div class="value-display"><span id="inclineFrictionValue">0.30</span></div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-primary" onclick="startAnimation()">▶️ Mulai Simulasi</button>
+                    <button class="btn-secondary" onclick="pauseAnimation()">⏸️ Jeda</button>
+                    <button class="btn-danger" onclick="resetSimulation()">🔄 Reset</button>
+                </div>
+
+                <div class="info-panel">
+                    <h3>📊 Analisis Fisika</h3>
+                    <div id="physicsInfo"></div>
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <span class="status-badge" id="statusBadge">SEIMBANG</span>
+                    </div>
+                </div>
+
+                <div class="explanation-panel" id="explanationPanel">
+                    <h4>💡 Penjelasan Simulasi</h4>
+                    <p id="explanationText">Atur parameter di atas untuk melihat penjelasan fisika.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 Kesetimbangan dalam Fisika - Pembelajaran Interaktif</p>
+        <p>Dibuat untuk membantu memahami konsep fisika kesetimbangan</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">Gunakan simulasi ini sebagai alat bantu pembelajaran fisika</p>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+        const g = 9.8;
+        
+        let currentMode = 'lever';
+        let isAnimating = false;
+        let animationId = null;
+        let leverAngle = 0;
+        let vehicleAngle = 0;
+        
+        const setupListeners = () => {
+            document.getElementById('massLeft').addEventListener('input', updateSimulation);
+            document.getElementById('massRight').addEventListener('input', updateSimulation);
+            document.getElementById('distanceLeft').addEventListener('input', updateSimulation);
+            document.getElementById('distanceRight').addEventListener('input', updateSimulation);
+            document.getElementById('vehicleMass').addEventListener('input', updateSimulation);
+            document.getElementById('roadAngle').addEventListener('input', updateSimulation);
+            document.getElementById('loadPosition').addEventListener('change', updateSimulation);
+            document.getElementById('friction').addEventListener('input', updateSimulation);
+            document.getElementById('objectMass').addEventListener('input', updateSimulation);
+            document.getElementById('inclineAngle').addEventListener('input', updateSimulation);
+            document.getElementById('inclineFriction').addEventListener('input', updateSimulation);
+        };
+
+        function setMode(mode) {
+            currentMode = mode;
+            const buttons = document.querySelectorAll('.mode-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.mode-btn').classList.add('active');
+            document.getElementById('leverControls').style.display = mode === 'lever' ? 'grid' : 'none';
+            document.getElementById('vehicleControls').style.display = mode === 'vehicle' ? 'grid' : 'none';
+            document.getElementById('inclineControls').style.display = mode === 'incline' ? 'grid' : 'none';
+            resetSimulation();
+        }
+
+        function toggleExplanation() {
+            const checkbox = document.getElementById('autoExplain');
+            checkbox.checked = !checkbox.checked;
+            updateSimulation();
+        }
+
+        function updateSimulation() {
+            if (currentMode === 'lever') {
+                document.getElementById('massLeftValue').textContent = document.getElementById('massLeft').value;
+                document.getElementById('massRightValue').textContent = document.getElementById('massRight').value;
+                document.getElementById('distanceLeftValue').textContent = parseFloat(document.getElementById('distanceLeft').value).toFixed(1);
+                document.getElementById('distanceRightValue').textContent = parseFloat(document.getElementById('distanceRight').value).toFixed(1);
+            } else if (currentMode === 'vehicle') {
+                document.getElementById('vehicleMassValue').textContent = document.getElementById('vehicleMass').value;
+                document.getElementById('roadAngleValue').textContent = document.getElementById('roadAngle').value;
+                document.getElementById('frictionValue').textContent = parseFloat(document.getElementById('friction').value).toFixed(2);
+            } else if (currentMode === 'incline') {
+                document.getElementById('objectMassValue').textContent = document.getElementById('objectMass').value;
+                document.getElementById('inclineAngleValue').textContent = document.getElementById('inclineAngle').value;
+                document.getElementById('inclineFrictionValue').textContent = parseFloat(document.getElementById('inclineFriction').value).toFixed(2);
+            }
+            calculatePhysics();
+            draw();
+        }
+
+        function calculatePhysics() {
+            const infoDiv = document.getElementById('physicsInfo');
+            const statusBadge = document.getElementById('statusBadge');
+            const explanationText = document.getElementById('explanationText');
+            const showExplanation = document.getElementById('autoExplain').checked;
+            
+            if (currentMode === 'lever') {
+                const m1 = parseFloat(document.getElementById('massLeft').value);
+                const m2 = parseFloat(document.getElementById('massRight').value);
+                const r1 = parseFloat(document.getElementById('distanceLeft').value);
+                const r2 = parseFloat(document.getElementById('distanceRight').value);
+                const W1 = m1 * g;
+                const W2 = m2 * g;
+                const torque1 = W1 * r1;
+                const torque2 = W2 * r2;
+                const resultant = Math.abs(torque1 - torque2);
+                
+                infoDiv.innerHTML = `
+                    <div class="info-grid">
+                        <div class="info-item"><div class="label">Gaya Berat Kiri (N)</div><div class="value">${W1.toFixed(1)}</div></div>
+                        <div class="info-item"><div class="label">Gaya Berat Kanan (N)</div><div class="value">${W2.toFixed(1)}</div></div>
+                        <div class="info-item"><div class="label">Torsi Kiri (Nm)</div><div class="value">${torque1.toFixed(1)}</div></div>
+                        <div class="info-item"><div class="label">Torsi Kanan (Nm)</div><div class="value">${torque2.toFixed(1)}</div></div>
+                        <div class="info-item"><div class="label">Selisih Torsi (Nm)</div><div class="value">${resultant.toFixed(1)}</div></div>
+                    </div>
+                `;
+                
+                if (resultant < 5) {
+                    statusBadge.textContent = '✓ SEIMBANG';
+                    statusBadge.className = 'status-badge status-balanced';
+                } else {
+                    statusBadge.textContent = '✗ TIDAK SEIMBANG';
+                    statusBadge.className = 'status-badge status-unbalanced';
+                }
+                
+                if (showExplanation) {
+                    let explanation = `<strong>Analisis Tuas:</strong><br>`;
+                    explanation += `Torsi kiri: τ₁ = ${W1.toFixed(1)} N × ${r1} m = ${torque1.toFixed(1)} Nm<br>`;
+                    explanation += `Torsi kanan: τ₂ = ${W2.toFixed(1)} N × ${r2} m = ${torque2.toFixed(1)} Nm<br><br>`;
+                    
+                    if (resultant < 5) {
+                        explanation += `<strong>Kesimpulan:</strong> Tuas SEIMBANG karena τ₁ ≈ τ₂.`;
+                    } else if (torque1 > torque2) {
+                        explanation += `<strong>Kesimpulan:</strong> Tuas TIDAK SEIMBANG. Sisi kiri lebih berat (τ₁ > τ₂).`;
+                    } else {
+                        explanation += `<strong>Kesimpulan:</strong> Tuas TIDAK SEIMBANG. Sisi kanan lebih berat (τ₂ > τ₁).`;
+                    }
+                    explanationText.innerHTML = explanation;
+                }
+            } else if (currentMode === 'vehicle') {
+                const mass = parseFloat(document.getElementById('vehicleMass').value);
+                const angle = parseFloat(document.getElementById('roadAngle').value) * Math.PI / 180;
+                const mu = parseFloat(document.getElementById('friction').value);
+                const W = mass * g;
+                const N = W * Math.cos(angle);
+                const Wparallel = W * Math.sin(angle);
+                const fmax = mu * N;
+                
+                infoDiv.innerHTML = `
+                    <div class="info-grid">
+                        <div class="info-item"><div class="label">Gaya Berat (N)</div><div class="value">${W.toFixed(0)}</div></div>
+                        <div class="info-item"><div class="label">Gaya Normal (N)</div><div class="value">${N.toFixed(0)}</div></div>
+                        <div class="info-item"><div class="label">Komponen W Sejajar (N)</div><div class="value">${Wparallel.toFixed(0)}</div></div>
+                        <div class="info-item"><div class="label">Gaya Gesek Maks (N)</div><div class="value">${fmax.toFixed(0)}</div></div>
+                    </div>
+                `;
+                
+                if (Wparallel <= fmax) {
+                    statusBadge.textContent = '✓ KENDARAAN AMAN';
+                    statusBadge.className = 'status-badge status-balanced';
+                } else {
+                    statusBadge.textContent = '⚠ KENDARAAN MELUNCUR';
+                    statusBadge.className = 'status-badge status-unbalanced';
+                }
+                
+                if (showExplanation) {
+                    const angleD = (angle * 180 / Math.PI).toFixed(0);
+                    let explanation = `<strong>Analisis Kendaraan:</strong><br>`;
+                    explanation += `Gaya normal: N = ${N.toFixed(0)} N<br>`;
+                    explanation += `Komponen berat sejajar: W∥ = ${Wparallel.toFixed(0)} N<br>`;
+                    explanation += `Gaya gesek maksimum: f = ${fmax.toFixed(0)} N<br><br>`;
+                    explanation += Wparallel <= fmax ? `<strong>AMAN:</strong> Gaya gesek mampu menahan.` : `<strong>BAHAYA:</strong> Kendaraan akan meluncur!`;
+                    explanationText.innerHTML = explanation;
+                }
+            } else if (currentMode === 'incline') {
+                const mass = parseFloat(document.getElementById('objectMass').value);
+                const angle = parseFloat(document.getElementById('inclineAngle').value) * Math.PI / 180;
+                const mu = parseFloat(document.getElementById('inclineFriction').value);
+                const W = mass * g;
+                const N = W * Math.cos(angle);
+                const Wparallel = W * Math.sin(angle);
+                const f = mu * N;
+                const resultant = Wparallel - f;
+                
+                infoDiv.innerHTML = `
+                    <div class="info-grid">
+                        <div class="info-item"><div class="label">Gaya Berat (N)</div><div class="value">${W.toFixed(1)}</div></div>
+                        <div class="info-item"><div class="label">Gaya Normal (N)</div><div class="value">${N.toFixed(1)}</div></div>
+                        <div class="info-item"><div class="label">W Sejajar Bidang (N)</div><div class="value">${Wparallel.toFixed(1)}</div></div>
+                        <div class="info-item"><div class="label">Gaya Gesek (N)</div><div class="value">${f.toFixed(1)}</div></div>
+                        <div class="info-item"><div class="label">Resultan (N)</div><div class="value">${Math.abs(resultant).toFixed(1)}</div></div>
+                    </div>
+                `;
+                
+                if (Math.abs(resultant) < 1) {
+                    statusBadge.textContent = '✓ BENDA DIAM (SEIMBANG)';
+                    statusBadge.className = 'status-badge status-balanced';
+                } else if (resultant > 0) {
+                    statusBadge.textContent = '↓ BENDA MELUNCUR TURUN';
+                    statusBadge.className = 'status-badge status-unbalanced';
+                } else {
+                    statusBadge.textContent = '✓ BENDA TERTAHAN';
+                    statusBadge.className = 'status-badge status-balanced';
+                }
+                
+                if (showExplanation) {
+                    let explanation = `<strong>Analisis Bidang Miring:</strong><br>`;
+                    explanation += `W∥ = ${Wparallel.toFixed(1)} N, f = ${f.toFixed(1)} N<br>`;
+                    explanation += `Resultan: ΣF = ${resultant.toFixed(1)} N<br><br>`;
+                    explanation += Math.abs(resultant) < 1 ? `<strong>SEIMBANG:</strong> Benda diam.` : (resultant > 0 ? `<strong>MELUNCUR:</strong> Benda akan turun.` : `<strong>TERTAHAN:</strong> Gesek menahan benda.`);
+                    explanationText.innerHTML = explanation;
+                }
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (currentMode === 'lever') drawLever();
+            else if (currentMode === 'vehicle') drawVehicle();
+            else if (currentMode === 'incline') drawIncline();
+        }
+
+        function drawLever() {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2 + 30;
+            const m1 = parseFloat(document.getElementById('massLeft').value);
+            const m2 = parseFloat(document.getElementById('massRight').value);
+            const r1 = parseFloat(document.getElementById('distanceLeft').value);
+            const r2 = parseFloat(document.getElementById('distanceRight').value);
+            const scale = 70;
+            
+            const W1 = m1 * g;
+            const W2 = m2 * g;
+            const torque1 = W1 * r1;
+            const torque2 = W2 * r2;
+            const diff = torque1 - torque2;
+            
+            if (isAnimating) {
+                const maxAngle = 0.25;
+                const targetAngle = Math.max(-maxAngle, Math.min(maxAngle, diff / 800));
+                leverAngle += (targetAngle - leverAngle) * 0.08;
+            }
+            
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(leverAngle);
+            
+            const leftEnd = -r1 * scale;
+            const rightEnd = r2 * scale;
+            
+            ctx.strokeStyle = '#2c5282';
+            ctx.lineWidth = 10;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(leftEnd, 0);
+            ctx.lineTo(rightEnd, 0);
+            ctx.stroke();
+            
+            const boxSize1 = Math.min(60, 30 + m1 * 0.3);
+            const boxSize2 = Math.min(60, 30 + m2 * 0.3);
+            
+            ctx.fillStyle = '#ed8936';
+            ctx.fillRect(leftEnd - boxSize1/2, -boxSize1 - 5, boxSize1, boxSize1);
+            ctx.strokeStyle = '#dd6b20';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(leftEnd - boxSize1/2, -boxSize1 - 5, boxSize1, boxSize1);
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 16px Source Sans 3';
+            ctx.textAlign = 'center';
+            ctx.fillText(m1 + ' kg', leftEnd, -boxSize1/2);
+            
+            ctx.fillStyle = '#4299e1';
+            ctx.fillRect(rightEnd - boxSize2/2, -boxSize2 - 5, boxSize2, boxSize2);
+            ctx.strokeStyle = '#3182ce';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(rightEnd - boxSize2/2, -boxSize2 - 5, boxSize2, boxSize2);
+            ctx.fillStyle = 'white';
+            ctx.fillText(m2 + ' kg', rightEnd, -boxSize2/2);
+            
+            ctx.restore();
+            
+            ctx.fillStyle = '#e53e3e';
+            ctx.beginPath();
+            ctx.moveTo(centerX - 25, centerY + 5);
+            ctx.lineTo(centerX, centerY - 35);
+            ctx.lineTo(centerX + 25, centerY + 5);
+            ctx.closePath();
+            ctx.fill();
+            ctx.strokeStyle = '#c53030';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            
+            ctx.fillStyle = '#2c5282';
+            ctx.font = 'bold 15px Source Sans 3';
+            ctx.textAlign = 'center';
+            ctx.fillText('r₁ = ' + r1 + ' m', centerX - r1 * scale / 2, centerY + 90);
+            ctx.fillText('r₂ = ' + r2 + ' m', centerX + r2 * scale / 2, centerY + 90);
+            ctx.fillText('Titik Tumpuan', centerX, centerY + 110);
+        }
+
+        function drawVehicle() {
+            const mass = parseFloat(document.getElementById('vehicleMass').value);
+            const angle = parseFloat(document.getElementById('roadAngle').value) * Math.PI / 180;
+            const baseX = 150;
+            const baseY = canvas.height - 150;
+            const roadLength = 600;
+            
+            ctx.fillStyle = '#8b7355';
+            ctx.fillRect(0, baseY + 50, canvas.width, 100);
+            
+            ctx.save();
+            ctx.translate(baseX, baseY);
+            ctx.rotate(-angle);
+            
+            ctx.fillStyle = '#4a5568';
+            ctx.fillRect(0, -20, roadLength, 40);
+            
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([20, 15]);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(roadLength, 0);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            ctx.restore();
+            
+            const carX = baseX + 250 * Math.cos(angle);
+            const carY = baseY - 250 * Math.sin(angle);
+            const carW = 100;
+            const carH = 50;
+            
+            ctx.save();
+            ctx.translate(carX, carY);
+            ctx.rotate(-angle);
+            
+            ctx.fillStyle = '#3182ce';
+            ctx.fillRect(-carW/2, -carH, carW, carH);
+            ctx.strokeStyle = '#2c5282';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(-carW/2, -carH, carW, carH);
+            
+            ctx.fillStyle = '#4299e1';
+            ctx.beginPath();
+            ctx.moveTo(-carW/2 + 15, -carH);
+            ctx.lineTo(-carW/2 + 25, -carH - 25);
+            ctx.lineTo(carW/2 - 25, -carH - 25);
+            ctx.lineTo(carW/2 - 15, -carH);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            
+            ctx.fillStyle = '#1a202c';
+            ctx.beginPath();
+            ctx.arc(-carW/2 + 20, 0, 12, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(carW/2 - 20, 0, 12, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.restore();
+            
+            if (angle > 0.01) {
+                ctx.strokeStyle = '#ed8936';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(baseX, baseY, 60, -angle, 0);
+                ctx.stroke();
+                ctx.fillStyle = '#ed8936';
+                ctx.font = 'bold 16px Source Sans 3';
+                ctx.fillText((angle * 180 / Math.PI).toFixed(0) + '°', baseX + 75, baseY - 10);
+            }
+        }
+
+        function drawIncline() {
+            const mass = parseFloat(document.getElementById('objectMass').value);
+            const angle = parseFloat(document.getElementById('inclineAngle').value) * Math.PI / 180;
+            const baseX = 150;
+            const baseY = canvas.height - 120;
+            const length = 500;
+            
+            ctx.fillStyle = '#cbd5e0';
+            ctx.strokeStyle = '#4a5568';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(baseX, baseY);
+            ctx.lineTo(baseX + length * Math.cos(angle), baseY - length * Math.sin(angle));
+            ctx.lineTo(baseX + length * Math.cos(angle), baseY);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            
+            ctx.strokeStyle = '#a0aec0';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < 10; i++) {
+                const t = i / 10;
+                const x1 = baseX + length * t * Math.cos(angle);
+                const y1 = baseY - length * t * Math.sin(angle);
+                const x2 = x1 + 20 * Math.sin(angle);
+                const y2 = y1 + 20 * Math.cos(angle);
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+            }
+            
+            ctx.fillStyle = '#8b7355';
+            ctx.fillRect(0, baseY, canvas.width, 200);
+            
+            const objX = baseX + length * 0.4 * Math.cos(angle);
+            const objY = baseY - length * 0.4 * Math.sin(angle);
+            const boxSize = Math.min(70, 40 + mass * 0.5);
+            
+            ctx.save();
+            ctx.translate(objX, objY);
+            ctx.rotate(-angle);
+            
+            ctx.fillStyle = '#ed8936';
+            ctx.fillRect(-boxSize/2, -boxSize/2, boxSize, boxSize);
+            ctx.strokeStyle = '#dd6b20';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(-boxSize/2, -boxSize/2, boxSize, boxSize);
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 18px Source Sans 3';
+            ctx.textAlign = 'center';
+            ctx.fillText(mass + ' kg', 0, 5);
+            
+            ctx.restore();
+            
+            ctx.strokeStyle = '#ed8936';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(baseX, baseY, 70, -angle, 0);
+            ctx.stroke();
+            ctx.fillStyle = '#ed8936';
+            ctx.font = 'bold 18px Source Sans 3';
+            ctx.fillText((angle * 180 / Math.PI).toFixed(0) + '°', baseX + 85, baseY - 15);
+        }
+
+        function startAnimation() {
+            isAnimating = true;
+            if (!animationId) {
+                animate();
+            }
+        }
+
+        function pauseAnimation() {
+            isAnimating = false;
+        }
+
+        function resetSimulation() {
+            isAnimating = false;
+            leverAngle = 0;
+            
+            if (currentMode === 'lever') {
+                document.getElementById('massLeft').value = 30;
+                document.getElementById('massRight').value = 30;
+                document.getElementById('distanceLeft').value = 2;
+                document.getElementById('distanceRight').value = 2;
+            } else if (currentMode === 'vehicle') {
+                document.getElementById('vehicleMass').value = 1500;
+                document.getElementById('roadAngle').value = 0;
+                document.getElementById('loadPosition').value = 'center';
+                document.getElementById('friction').value = 0.7;
+            } else if (currentMode === 'incline') {
+                document.getElementById('objectMass').value = 20;
+                document.getElementById('inclineAngle').value = 30;
+                document.getElementById('inclineFriction').value = 0.3;
+            }
+            
+            updateSimulation();
+        }
+
+        function animate() {
+            updateSimulation();
+            if (isAnimating) {
+                animationId = requestAnimationFrame(animate);
+            } else {
+                animationId = null;
+            }
+        }
+
+        setupListeners();
+        updateSimulation();
+    </script>
+</body>
+</html>
